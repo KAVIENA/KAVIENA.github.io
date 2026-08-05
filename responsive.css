@@ -1,0 +1,66 @@
+/* Cross-device safeguards shared by every portfolio page. */
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+img, svg, video, iframe, canvas {
+  max-width: 100%;
+}
+
+a, button, input, textarea, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a[role="button"] {
+  min-height: 44px;
+}
+
+input, textarea, select {
+  font-size: max(16px, 1em);
+}
+
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 5.25rem;
+  }
+
+  .fixed.bottom-0 {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .px-gutter {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .py-32 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .pt-40, .pt-48 {
+    padding-top: 7rem;
+  }
+
+  .text-display-lg, .text-\[64px\], .text-\[72px\] {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    line-height: 1.08;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .px-gutter {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
