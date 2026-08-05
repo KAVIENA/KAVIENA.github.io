@@ -88,7 +88,8 @@
     menu.addEventListener('click', (event) => { if (event.target === menu || event.target.closest('a, button')) close(); });
   };
 
-  const addCardLinks = () => {
+  const addProjectsPageLinks = () => {
+    if (currentFile() !== 'projects.html') return;
     document.querySelectorAll('.glass-card').forEach((card) => {
       const heading = card.querySelector('h2, h3');
       const href = heading && destinationFor(heading.textContent);
@@ -96,7 +97,7 @@
       const link = document.createElement('a');
       link.className = 'portfolio-card-link';
       link.href = href;
-      link.textContent = 'Open case study →';
+      link.textContent = 'View Case Study →';
       card.append(link);
     });
   };
@@ -170,11 +171,9 @@
       if (href && !button.closest('form')) button.addEventListener('click', () => { window.location.href = href; });
     });
 
-    addSiteDirectory();
     addProjectJourney();
     addMobileMenu();
-    addCardLinks();
-    addHomeAndExperienceLinks();
+    addProjectsPageLinks();
   });
 
   document.addEventListener('submit', (event) => {
