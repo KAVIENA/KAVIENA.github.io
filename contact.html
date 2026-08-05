@@ -237,15 +237,18 @@
 <div class="glass-card p-8 md:p-12 rounded-3xl relative overflow-hidden" style="transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px);">
 <!-- Subtle top gradient border effect -->
 <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
-<form class="space-y-8" id="contact-form" onsubmit="return false" action="mailto:kaviena.global@gmail.com" method="POST">
+<form class="space-y-8" id="contact-form" action="https://formsubmit.co/kaviena.global@gmail.com" method="POST">
+<input name="_subject" type="hidden" value="New portfolio enquiry"/>
+<input name="_template" type="hidden" value="table"/>
+<input name="_next" type="hidden" value="https://kaviena.github.io/contact.html?sent=true"/>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 <div class="space-y-2">
 <label class="font-label-md text-label-md text-on-surface-variant" for="name">FULL NAME</label>
-<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 text-on-surface font-body-md placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all" id="name" name="name" placeholder="John Doe" type="text">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 text-on-surface font-body-md placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all" id="name" name="name" placeholder="John Doe" required="" type="text">
 </div>
 <div class="space-y-2">
 <label class="font-label-md text-label-md text-on-surface-variant" for="email">EMAIL ADDRESS</label>
-<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 text-on-surface font-body-md placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all" id="email" name="email" placeholder="john@example.com" type="email">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 text-on-surface font-body-md placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all" id="email" name="email" placeholder="john@example.com" required="" type="email">
 </div>
 </div>
 <div class="space-y-2">
@@ -254,7 +257,7 @@
 </div>
 <div class="space-y-2">
 <label class="font-label-md text-label-md text-on-surface-variant" for="message">MESSAGE</label>
-<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 text-on-surface font-body-md placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all resize-none" id="message" name="message" placeholder="Tell me about your technical requirements or collaboration idea..." rows="5"></textarea>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-4 text-on-surface font-body-md placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all resize-none" id="message" name="message" placeholder="Tell me about your technical requirements or collaboration idea..." required="" rows="5"></textarea>
 </div>
 <button class="w-full bg-primary-container text-on-primary-container font-display-lg text-xl font-extrabold py-5 rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-all cyan-glow flex items-center justify-center gap-3" type="submit">
                             Initiate Transmission
@@ -308,42 +311,6 @@
 <script>
         // Micro-interactions and effects
         document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('contact-form');
-            const submitBtn = form.querySelector('button');
-            
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const originalText = submitBtn.innerHTML;
-                
-                submitBtn.innerHTML = `
-                    <span class="material-symbols-outlined animate-spin" data-icon="sync">sync</span>
-                    Transmitting...
-                `;
-                submitBtn.disabled = true;
-                submitBtn.classList.remove('cyan-glow');
-                submitBtn.classList.add('opacity-50');
-
-                // Simulate processing
-                setTimeout(() => {
-                    submitBtn.innerHTML = `
-                        <span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
-                        System Link Established
-                    `;
-                    submitBtn.classList.remove('bg-primary-container');
-                    submitBtn.classList.add('bg-green-500', 'text-white');
-                    
-                    // Reset after a while
-                    setTimeout(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                        submitBtn.classList.add('cyan-glow');
-                        submitBtn.classList.remove('opacity-50', 'bg-green-500', 'text-white');
-                        submitBtn.classList.add('bg-primary-container');
-                        form.reset();
-                    }, 3000);
-                }, 1500);
-            });
-
             // Atmospheric Floating Effect on Glass Cards
             const cards = document.querySelectorAll('.glass-card');
             cards.forEach(card => {

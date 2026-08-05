@@ -53,19 +53,6 @@
     footer.before(journey);
   };
 
-  const addSiteDirectory = () => {
-    const footer = document.querySelector('footer');
-    if (!footer || document.querySelector('.portfolio-directory')) return;
-    const directory = document.createElement('section');
-    directory.className = 'portfolio-directory';
-    directory.setAttribute('aria-label', 'Portfolio directory');
-    directory.innerHTML = `
-      <div><span>Navigate</span>${links([['Home', pages.home], ['Projects', pages.projects], ['Experience', pages.experience], ['Contact', pages.contact]])}</div>
-      <div><span>Case studies</span>${links(projectList)}</div>
-      <div><span>Connect</span><a href="mailto:kaviena.global@gmail.com">kaviena.global@gmail.com</a><a href="https://www.linkedin.com/in/kavienasharon/" target="_blank" rel="noopener">LinkedIn</a></div>`;
-    footer.before(directory);
-  };
-
   const addMobileMenu = () => {
     const trigger = [...document.querySelectorAll('button')].find((button) =>
       normalise(button.textContent) === 'menu' || normalise(button.getAttribute('aria-label') || '') === 'menu');
@@ -100,42 +87,6 @@
       link.textContent = 'View Case Study →';
       card.append(link);
     });
-  };
-
-  const addHomeAndExperienceLinks = () => {
-    const makeGroup = (title, intro, items) => {
-      const section = document.createElement('div');
-      section.className = 'portfolio-context-links';
-      section.innerHTML = `<div><p>${title}</p><span>${intro}</span></div><div class="portfolio-context-grid">${links(items, 'portfolio-context-link')}</div>`;
-      return section;
-    };
-
-    if (currentFile() === 'index.html') {
-      const projectSection = document.querySelector('#projects');
-      const experienceSection = document.querySelector('#experience');
-      if (projectSection && !projectSection.querySelector('.portfolio-context-links')) {
-        projectSection.append(makeGroup('Explore project case studies', 'Open the full project story, approach, and outcome.', [
-          ['Clarity KM @ Airbus', 'clarity_km.html'], ['Strategic Focus / Legit Insights', 'strategic_focus.html'],
-          ['Container Intelligence', 'container_intelligence.html'], ['Aviation Sentiment', 'aviation_sentiment.html']
-        ]));
-      }
-      if (experienceSection && !experienceSection.querySelector('.portfolio-context-links')) {
-        experienceSection.append(makeGroup('Work behind the experience', 'Explore the work connected to the experience timeline.', [
-          ['Container Flow Optimization', 'container_flow_optimization.html'], ['iRider Research', 'irider.html'],
-          ['Strategic Focus / Legit Insights', 'strategic_focus.html']
-        ]));
-      }
-    }
-
-    if (currentFile() === 'experience.html') {
-      const main = document.querySelector('main');
-      if (main && !main.querySelector('.portfolio-context-links')) {
-        main.append(makeGroup('Related case studies', 'Projects directly connected to this professional experience.', [
-          ['Container Flow Optimization', 'container_flow_optimization.html'], ['iRider Research', 'irider.html'],
-          ['Strategic Focus / Legit Insights', 'strategic_focus.html']
-        ]));
-      }
-    }
   };
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -176,18 +127,4 @@
     addProjectsPageLinks();
   });
 
-  document.addEventListener('submit', (event) => {
-    const form = event.target;
-    if (form.id !== 'contact-form') return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    const data = new FormData(form);
-    const name = data.get('name') || 'Portfolio visitor';
-    const email = data.get('email') || 'Not provided';
-    const message = data.get('message') || 'No message provided';
-    const topic = data.get('subject') || `Portfolio enquiry from ${name}`;
-    const subject = encodeURIComponent(topic);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:kaviena.global@gmail.com?subject=${subject}&body=${body}`;
-  }, true);
 })();
