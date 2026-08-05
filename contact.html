@@ -317,7 +317,7 @@
             const status = document.getElementById('form-status');
 
             if (new URLSearchParams(window.location.search).has('sent')) {
-                status.textContent = 'Message transmitted. If this is your first submission, please confirm the FormSubmit activation email sent to Kaviena.';
+                status.textContent = 'Message sent successfully.';
             }
 
             form.addEventListener('submit', (event) => {
