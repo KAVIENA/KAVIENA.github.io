@@ -102,6 +102,16 @@ section[id] {
 .portfolio-menu p { color: #8aebff; font: 500 .75rem/1.2 monospace; letter-spacing: .08em; text-transform: uppercase; }
 .portfolio-menu-email { background: #8aebff; color: #00363e; display: block; font-weight: 700; margin-top: 1.5rem; text-align: center; }
 
+.form-status { min-height: 1.5rem; margin-top: 1rem; }
+.form-rocket { display: inline-block; }
+.rocket-launch { animation: rocket-launch 1s ease-in forwards; }
+.form-sent { background: #22c55e !important; color: white !important; }
+@keyframes rocket-launch {
+  0% { opacity: 1; transform: translate(0, 0) rotate(-20deg) scale(1); }
+  60% { opacity: 1; transform: translate(2.5rem, -2.5rem) rotate(-25deg) scale(1.2); }
+  100% { opacity: 0; transform: translate(4rem, -4rem) rotate(-30deg) scale(.5); }
+}
+
 .portfolio-card-link {
   align-items: center;
   color: #8aebff;
