@@ -27,7 +27,7 @@
   const destinationFor = (text) => {
     const label = normalise(text);
     for (const [name, href] of Object.entries(cases)) if (label.includes(name)) return href;
-    if (label.includes('consult') || label.includes('contact') || label.includes('get in touch') || label.includes('send message')) return pages.contact;
+    if (label.includes('consult') || label.includes('contact') || label.includes('get in touch') || label.includes('send message') || label.includes('strategy call') || label.includes("let's talk")) return pages.contact;
     if (label.includes('experience') || label === 'work') return pages.experience;
     if (label.includes('project')) return pages.projects;
     if (label.includes('home')) return pages.home;
@@ -88,8 +88,59 @@
     menu.addEventListener('click', (event) => { if (event.target === menu || event.target.closest('a, button')) close(); });
   };
 
+  const addCardLinks = () => {
+    document.querySelectorAll('.glass-card').forEach((card) => {
+      const heading = card.querySelector('h2, h3');
+      const href = heading && destinationFor(heading.textContent);
+      if (!href || card.querySelector(`a[href="${href}"]`)) return;
+      const link = document.createElement('a');
+      link.className = 'portfolio-card-link';
+      link.href = href;
+      link.textContent = 'Open case study →';
+      card.append(link);
+    });
+  };
+
+  const addHomeAndExperienceLinks = () => {
+    const makeGroup = (title, intro, items) => {
+      const section = document.createElement('div');
+      section.className = 'portfolio-context-links';
+      section.innerHTML = `<div><p>${title}</p><span>${intro}</span></div><div class="portfolio-context-grid">${links(items, 'portfolio-context-link')}</div>`;
+      return section;
+    };
+
+    if (currentFile() === 'index.html') {
+      const projectSection = document.querySelector('#projects');
+      const experienceSection = document.querySelector('#experience');
+      if (projectSection && !projectSection.querySelector('.portfolio-context-links')) {
+        projectSection.append(makeGroup('Explore project case studies', 'Open the full project story, approach, and outcome.', [
+          ['Clarity KM @ Airbus', 'clarity_km.html'], ['Strategic Focus / Legit Insights', 'strategic_focus.html'],
+          ['Container Intelligence', 'container_intelligence.html'], ['Aviation Sentiment', 'aviation_sentiment.html']
+        ]));
+      }
+      if (experienceSection && !experienceSection.querySelector('.portfolio-context-links')) {
+        experienceSection.append(makeGroup('Work behind the experience', 'Explore the work connected to the experience timeline.', [
+          ['Container Flow Optimization', 'container_flow_optimization.html'], ['iRider Research', 'irider.html'],
+          ['Strategic Focus / Legit Insights', 'strategic_focus.html']
+        ]));
+      }
+    }
+
+    if (currentFile() === 'experience.html') {
+      const main = document.querySelector('main');
+      if (main && !main.querySelector('.portfolio-context-links')) {
+        main.append(makeGroup('Related case studies', 'Projects directly connected to this professional experience.', [
+          ['Container Flow Optimization', 'container_flow_optimization.html'], ['iRider Research', 'irider.html'],
+          ['Strategic Focus / Legit Insights', 'strategic_focus.html']
+        ]));
+      }
+    }
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('a[href^="mailto:"]').forEach((link) => { link.href = 'mailto:kaviena.global@gmail.com'; });
+    document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+      link.href = normalise(link.textContent).includes('strategy call') ? pages.contact : 'mailto:kaviena.global@gmail.com';
+    });
     document.querySelectorAll('form[action^="mailto:"]').forEach((form) => { form.action = 'mailto:kaviena.global@gmail.com'; });
     document.querySelectorAll('a[href="#"]').forEach((link) => {
       const nearbyHeading = link.closest('.cursor-pointer, .glass-card, article, section')?.querySelector('h2, h3');
@@ -122,6 +173,8 @@
     addSiteDirectory();
     addProjectJourney();
     addMobileMenu();
+    addCardLinks();
+    addHomeAndExperienceLinks();
   });
 
   document.addEventListener('submit', (event) => {
