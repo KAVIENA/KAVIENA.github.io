@@ -79,7 +79,7 @@
     if (currentFile() !== 'projects.html') return;
     document.querySelectorAll('.glass-card').forEach((card) => {
       const heading = card.querySelector('h2, h3');
-      const href = heading && destinationFor(heading.textContent);
+      const href = card.dataset.caseLink || (heading && destinationFor(heading.textContent));
       if (!href || card.querySelector(`a[href="${href}"]`)) return;
       const link = document.createElement('a');
       link.className = 'portfolio-card-link';
